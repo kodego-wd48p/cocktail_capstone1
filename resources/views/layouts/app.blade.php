@@ -52,15 +52,19 @@
                         <li><a class="dropdown-item" href="{{ url('/random-drinks?category=4') }}">Champagne</a></li>
                         <li><a class="dropdown-item" href="{{ url('/random-drinks?category=5') }}">Vodka</a></li>
                         <li><a class="dropdown-item" href="{{ url('/random-drinks?category=6') }}">Gin</a></li>
-
                     </ul>
                 </li>
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+                        <form class="d-flex" role="search" action="/random-drinks/search" method="GET">
+                            @csrf
+                            <input class="form-control me-2 border border-dark" type="search" name="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success border border-dark" type="submit">Search</button>
+                        </form>
+
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">

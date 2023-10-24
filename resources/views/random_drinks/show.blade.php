@@ -15,9 +15,20 @@
                     <p class="label">{{ $random_drink->ingredients }}</p>
                     <p class="label">Instuctions</p>
                     <p class="label">{{ $random_drink->instructions }}</p>
-                    <div class="col-md-6 btn-group mx-3">
-                    <button type="button" class="btn btn-primary"  onclick='window.location.href = "/random-drink/{{ $random_drink->id }}/edit"'>Edit Drink</button>
+                    <div class="text-center">
+                    <div class="col-md-10 btn-group">
                     <button type="button"  onclick='window.location.href = "/random-drinks"' class="btn btn-info">Back</button>
+                    @auth 
+                    @if(Auth::user()->role_id==1)
+                    <button type="button" class="btn btn-primary"  onclick='window.location.href = "/random-drink/{{ $random_drink->id }}/edit"'>Edit Drink</button>
+                    <form action="/random-drink/{{ $random_drink->id }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger"  onclick='window.location.href = "/random-drink/{{ $random_drink->id }}"'>Delete Drink</button>
+                    @endif
+                    @endauth
+                    </form>
+                    </div>
                     </div>
                     <br>
                 

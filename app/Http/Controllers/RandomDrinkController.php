@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RandomDrink;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RandomDrinkController extends Controller
 {
@@ -66,12 +68,17 @@ class RandomDrinkController extends Controller
         return redirect('/random-drinks')->with('success', 'Drink created successfully!');
     }
 
-    public function edit($id){
+    public function edit($id){  
+        if(Auth::user()->role_id==1){   
         $random_drink = RandomDrink::find($id);
        
         return view('random_drinks.edit', [
             'random_drink' => $random_drink
         ]);
+    }else{
+        abort(404);
+      }
+    
     }
     
 
@@ -84,18 +91,18 @@ class RandomDrinkController extends Controller
             'instructions' => 'required',
         ]);
     
-        // Find the RandomDrink record by its ID
+    
         $random_drink = RandomDrink::find($id);
     
         if (!$random_drink) {
             return redirect('/random-drinks')->with('error', 'Drink not found');
         }
     
-        // Handle file upload
+       
         $imagePath = $request->file('image')->store('public/images');
         $imageFilename = str_replace('public/', 'storage/', $imagePath);
     
-        // Update the record with the new data
+        
         $random_drink->name = $validatedData['name'];
         $random_drink->image = $imageFilename;
         $random_drink->category_id = $validatedData['category_id'];
@@ -109,7 +116,32 @@ class RandomDrinkController extends Controller
     
 
     public function destroy($id){
-        
+        if(Auth::user()->role_id==1){
+        RandomDrink::where('id', $id)->delete();
+
+        return redirect('/random-drinks')->with('success', 'Success!!!');
+    }else{
+        abort(404);
+      }
+    }
+
+    public function search(Request $request) {
+        $search = $request->input('search'); 
+    
+        if ($search) {
+            $random_drinks = DB::table('random_drinks')
+                ->where('random_drinks.name', 'LIKE', "%$search%")
+                ->orWhere('random_drinks.category_id', 'LIKE', "%$search%")
+                ->get();
+        }else {
+            $random_drinks = collect([]);
+        }
+        $message = $random_drinks->isEmpty() ? 'No drinks found for your search.' : '';
+    
+        return view('random_drinks.index', [
+            'random_drinks' => $random_drinks,
+            'message' => $message,
+        ]);
     }
 
 }

@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row row-cols-1 row-cols-md-6 g-4">
+    @if (!empty($message))
+                        <p>{{ $message }}</p>
+                    @else{
         @foreach($random_drinks as $random_drink)
             <div class="col">
             <div class="card">
@@ -13,6 +17,11 @@
                 </div>
             </div>
         @endforeach
+                    }
+        @endif
+                    
+                        
+        
     </div>
 </div>
 @endsection

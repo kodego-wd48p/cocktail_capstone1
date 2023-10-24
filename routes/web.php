@@ -44,6 +44,8 @@ Route::get('/random-drinks', [RandomDrinkController::class, 'index']);
 Route::get('/random-drink/{id}',[RandomDrinkController::class, 'show']);
 Route::get('/random-drink',[RandomDrinkController::class, 'create']);
 Route::get('/random-drink/{id}/edit', [RandomDrinkController::class, 'edit']);
+Route::get('/random-drinks/search/{search?}', [RandomDrinkController::class, 'search']);
+
 
 Route::post('/random_drink', [RandomDrinkController::class, 'store']);
 Route::put('/random_drink/{id}/edit', [RandomDrinkController::class, 'update']);
