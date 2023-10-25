@@ -46,3 +46,12 @@
     max-height: 400px;
     margin-left: 13%;
 }
+
+.brand-logo {
+    width: 60px;
+    height: 40px;
+}
+
+.logo {
+    text-align: center;
+}

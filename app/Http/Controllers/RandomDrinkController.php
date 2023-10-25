@@ -65,7 +65,7 @@ class RandomDrinkController extends Controller
 
         $random_drink->save();
 
-        return redirect('/random-drinks')->with('success', 'Drink created successfully!');
+        return redirect()->back()->with('success', 'Drink created successfully!');
     }
 
     public function edit($id){  
@@ -111,7 +111,7 @@ class RandomDrinkController extends Controller
     
         $random_drink->save();
     
-        return redirect('/random-drinks')->with('success', 'Drink updated successfully!');
+        return redirect()->back()->with('success', 'Drink updated successfully!');
     }
     
 
